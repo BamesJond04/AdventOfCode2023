@@ -1,0 +1,53 @@
+import regex as re
+import numpy as np
+from functools import reduce
+import pyperclip as pc
+
+numSuccess = []
+
+##Part 1
+input1 = pc.paste()
+
+removeStart = re.compile(r'\D+')
+removed = removeStart.split(input1)
+
+times = removed[1:int(len(removed)/2)+1]
+times = [int(x) for x in times]
+distances = removed[int(len(removed)/2)+1:]
+distances = [int(x) for x in distances]
+
+part1n = []
+
+for index,time in enumerate(times):
+    distance = distances[index]
+    ranges = np.linspace(0,time, time+1)
+    n=0
+    distancesI = ranges*(((len(ranges))-1)-ranges)
+    successes= np.where(distancesI >= distance, 1, 0)
+    n = sum(successes)
+    part1n.append(n)
+
+print(reduce(lambda x,y: x*y, part1n))
+
+
+##Part 2
+
+input2 = pc.paste().replace(' ','')
+
+removeStart = re.compile(r'\D+')
+removed = removeStart.split(input2)
+
+times = removed[1:int(len(removed)/2)+1]
+times = [int(x) for x in times]
+distances = removed[int(len(removed)/2)+1:]
+distances = [int(x) for x in distances]
+
+
+for index,time in enumerate(times):
+    distance = distances[index]
+    ranges = np.linspace(0,time, time+1)
+    n=0
+    distancesI = ranges*(((len(ranges))-1)-ranges)
+    successes= np.where(distancesI >= distance, 1, 0)
+    
+print(sum(successes))
